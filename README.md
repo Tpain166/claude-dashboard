@@ -86,6 +86,27 @@ source <(curl -fsSL https://raw.githubusercontent.com/seunggabi/claude-dashboard
 # After:  cdn my-project --path ~/code/foo  ⚡️
 ```
 
+### 🔄 Upgrade
+
+Keep claude-dashboard up to date with the latest features:
+
+```bash
+# Homebrew
+brew update
+brew upgrade claude-dashboard
+
+# Manual installation
+curl -fsSL https://raw.githubusercontent.com/seunggabi/claude-dashboard/main/install.sh | bash
+
+# Go
+go install github.com/seunggabi/claude-dashboard/cmd/claude-dashboard@latest
+```
+
+**After upgrading, run setup to apply new configurations:**
+```bash
+claude-dashboard setup
+```
+
 ## Why claude-dashboard
 
 ### The Problem
